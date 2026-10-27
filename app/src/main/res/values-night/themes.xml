@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- 深色下同样用深海蓝窗口底，冷启动不闪白。 -->
+  <style name="Theme.Rikkahub" parent="android:Theme.Material.NoActionBar">
+    <item name="android:windowBackground">#FF0E141A</item>
+  </style>
+</resources>

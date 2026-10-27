@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">miniWhale</string>
+  <string name="assistant_page_default_assistant">Default Assistant</string>
+  <string name="db_migrating">Migrating database…</string>
+  <string name="error_title_generation">Message generation failed</string>
+  <string name="error_title_send_message">Message send failed</string>
+  <string name="notification_channel_chat_completed">Chat Completed</string>
+  <string name="notification_channel_chat_live_update">Chat Generation Progress</string>
+  <string name="notification_live_update_title">Generating response…</string>
+  <string name="placeholder_battery_level">Battery Level</string>
+  <string name="placeholder_char">Assistant Name</string>
+  <string name="placeholder_current_date">Date</string>
+  <string name="placeholder_device_info">Device Info</string>
+  <string name="placeholder_locale">Locale</string>
+  <string name="placeholder_model_id">Model ID</string>
+  <string name="placeholder_model_name">Model Name</string>
+  <string name="placeholder_nickname">User Nickname</string>
+  <string name="placeholder_system_version">System Version</string>
+  <string name="placeholder_timezone">Timezone</string>
+  <string name="placeholder_user">User</string>
+  <string name="safe_mode_assistants">Assistants</string>
+  <string name="safe_mode_copy">Copy</string>
+  <string name="safe_mode_crash_report">Crash Report</string>
+  <string name="safe_mode_current_assistant">Current assistant: %s</string>
+  <string name="safe_mode_default_assistant">Default Assistant</string>
+  <string name="safe_mode_description">The app crashed on the last launch. You can switch to a different assistant to resolve the issue.</string>
+  <string name="safe_mode_enter_app">Enter App</string>
+  <string name="safe_mode_switch_assistant">Switch Assistant</string>
+  <string name="safe_mode_title">Safe Mode</string>
+  <string name="shortcut_chat_short">Chat with her</string>
+  <string name="shortcut_chat_long">Open the chat with miniWhale</string>
+  <string name="title_activity_safe_mode">Safe Mode</string>
+</resources>

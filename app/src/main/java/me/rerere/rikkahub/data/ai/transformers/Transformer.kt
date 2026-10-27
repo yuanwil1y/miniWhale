@@ -1,0 +1,126 @@
+package me.rerere.rikkahub.data.ai.transformers
+
+import android.content.Context
+import kotlinx.coroutines.flow.MutableStateFlow
+import me.rerere.ai.provider.Model
+import me.rerere.ai.ui.UIMessage
+import me.rerere.rikkahub.data.datastore.Settings
+import me.rerere.rikkahub.data.model.Assistant
+
+class TransformerContext(
+    val context: Context,
+    val model: Model,
+    val assistant: Assistant,
+    val settings: Settings,
+    val processingStatus: MutableStateFlow<String?> = MutableStateFlow(null),
+    val workspaceCwd: String? = null,
+    /** 小鲸鱼：这一轮是闹钟轮时不为 null（随请求传递，不用全局标记，W-012） */
+    val whaleAlarm: whaleui.nightsky.ltd.whale.WhaleAlarmTurn? = null,
+    /**
+     * 小鲸鱼：本轮的报时时间，第 1 步请求时取，之后每一步都用它（W-026：每轮注入各步逐字一致）。
+     * 为 null 时由 WhaleGuardTransformer 自己读时钟。
+     */
+    val turnNow: java.time.ZonedDateTime? = null,
+)
+
+interface MessageTransformer {
+    /**
+     * 消息转换器，用于对消息进行转换
+     *
+     * 对于输入消息，消息会转换被提供给API模块
+     *
+     * 对于输出消息，会对消息输出chunk进行转换
+     */
+    suspend fun transform(
+        ctx: TransformerContext,
+        messages: List<UIMessage>,
+    ): List<UIMessage> {
+        return messages
+    }
+}
+
+interface InputMessageTransformer : MessageTransformer
+
+interface OutputMessageTransformer : MessageTransformer {
+    /**
+     * 一个视觉的转换，例如转换think tag为reasoning parts
+     * 但是不实际转换消息，因为流式输出需要处理消息delta chunk
+     * 不能还没结束生成就transform，因此提供一个visualTransform
+     */
+    suspend fun visualTransform(
+        ctx: TransformerContext,
+        messages: List<UIMessage>,
+    ): List<UIMessage> {
+        return messages
+    }
+
+    /**
+     * 消息生成完成后调用
+     */
+    suspend fun onGenerationFinish(
+        ctx: TransformerContext,
+        messages: List<UIMessage>,
+    ): List<UIMessage> {
+        return messages
+    }
+}
+
+suspend fun List<UIMessage>.transforms(
+    transformers: List<MessageTransformer>,
+    context: Context,
+    model: Model,
+    assistant: Assistant,
+    settings: Settings,
+    processingStatus: MutableStateFlow<String?> = MutableStateFlow(null),
+    workspaceCwd: String? = null,
+    whaleAlarm: whaleui.nightsky.ltd.whale.WhaleAlarmTurn? = null,
+    turnNow: java.time.ZonedDateTime? = null,
+): List<UIMessage> {
+    val ctx = TransformerContext(
+        context = context,
+        model = model,
+        assistant = assistant,
+        settings = settings,
+        processingStatus = processingStatus,
+        workspaceCwd = workspaceCwd,
+        whaleAlarm = whaleAlarm,
+        turnNow = turnNow,
+    )
+    return transformers.fold(this) { acc, transformer ->
+        transformer.transform(ctx, acc)
+    }
+}
+
+suspend fun List<UIMessage>.visualTransforms(
+    transformers: List<MessageTransformer>,
+    context: Context,
+    model: Model,
+    assistant: Assistant,
+    settings: Settings,
+): List<UIMessage> {
+    val ctx = TransformerContext(context, model, assistant, settings)
+    return transformers.fold(this) { acc, transformer ->
+        if (transformer is OutputMessageTransformer) {
+            transformer.visualTransform(ctx, acc)
+        } else {
+            acc
+        }
+    }
+}
+
+suspend fun List<UIMessage>.onGenerationFinish(
+    transformers: List<MessageTransformer>,
+    context: Context,
+    model: Model,
+    assistant: Assistant,
+    settings: Settings,
+): List<UIMessage> {
+    val ctx = TransformerContext(context, model, assistant, settings)
+    return transformers.fold(this) { acc, transformer ->
+        if (transformer is OutputMessageTransformer) {
+            transformer.onGenerationFinish(ctx, acc)
+        } else {
+            acc
+        }
+    }
+}

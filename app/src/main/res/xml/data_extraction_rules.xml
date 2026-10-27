@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  自动备份开关在 AndroidManifest 里已经关掉（android:allowBackup="false"）；Android 12+ 的换机迁移
+  （device-transfer）不看这个开关，只看这里。
+
+  原则（W-046）：本 App 的私有数据一律不进云备份、也不在换机时迁移。两段写法完全一样，
+  按整个存储域排除，而不是一个个目录列：以后新加的目录也自动不迁移。覆盖的内容包括
+  files/secrets（加密的 Key 和代理密码）、files/persona（soul.md / user.md）、files/stickers（表情库）、
+  files/whale（照片、语音、上传的文档、头像）、files/upload、files/skills、模型能力表缓存、
+  数据库（聊天记录、记忆、日记）、DataStore / SharedPreferences（设置），以及 external 下的应用目录。
+-->
+<data-extraction-rules>
+  <cloud-backup>
+    <exclude
+      domain="root"
+      path="." />
+    <exclude
+      domain="file"
+      path="." />
+    <exclude
+      domain="database"
+      path="." />
+    <exclude
+      domain="sharedpref"
+      path="." />
+    <exclude
+      domain="external"
+      path="." />
+  </cloud-backup>
+  <device-transfer>
+    <exclude
+      domain="root"
+      path="." />
+    <exclude
+      domain="file"
+      path="." />
+    <exclude
+      domain="database"
+      path="." />
+    <exclude
+      domain="sharedpref"
+      path="." />
+    <exclude
+      domain="external"
+      path="." />
+  </device-transfer>
+</data-extraction-rules>

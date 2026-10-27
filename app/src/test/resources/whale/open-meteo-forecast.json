@@ -1,0 +1,47 @@
+{
+  "latitude": 39.904,
+  "longitude": 116.407,
+  "generationtime_ms": 0.1,
+  "utc_offset_seconds": 28800,
+  "timezone": "Asia/Shanghai",
+  "timezone_abbreviation": "CST",
+  "current": {
+    "time": "2026-10-26T05:40",
+    "interval": 900,
+    "temperature_2m": 12.3,
+    "apparent_temperature": 11.0,
+    "weather_code": 3,
+    "wind_speed_10m": 8.4,
+    "relative_humidity_2m": 66
+  },
+  "daily": {
+    "time": [
+      "2026-10-26",
+      "2026-10-27"
+    ],
+    "weather_code": [
+      3,
+      61
+    ],
+    "temperature_2m_max": [
+      15.2,
+      14.1
+    ],
+    "temperature_2m_min": [
+      8.0,
+      7.5
+    ],
+    "precipitation_probability_max": [
+      10,
+      60
+    ],
+    "sunrise": [
+      "2026-10-26T06:12",
+      "2026-10-27T06:13"
+    ],
+    "sunset": [
+      "2026-10-26T17:42",
+      "2026-10-27T17:41"
+    ]
+  }
+}

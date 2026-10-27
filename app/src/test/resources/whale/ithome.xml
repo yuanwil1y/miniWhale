@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>IT之家示例 Feed</title>
+    <link>https://www.ithome.com/</link>
+    <description>示例 RSS 频道，只用于单元测试。</description>
+    <language>zh-cn</language>
+    <item>
+      <title>示例新闻标题一</title>
+      <link>https://www.ithome.com/0/000/001.htm</link>
+      <description><![CDATA[<p>示例新闻摘要一</p>]]></description>
+      <pubDate>Sun, 26 Oct 2026 05:00:00 +0800</pubDate>
+    </item>
+    <item>
+      <title>示例新闻标题二</title>
+      <link>https://www.ithome.com/0/000/002.htm</link>
+      <description><![CDATA[<div><strong>示例新闻摘要二</strong> 与示例补充说明</div>]]></description>
+      <pubDate>Sun, 26 Oct 2026 05:10:00 +0800</pubDate>
+    </item>
+    <item>
+      <title>示例新闻标题三</title>
+      <link>https://www.ithome.com/0/000/003.htm</link>
+      <description><![CDATA[<p>示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三示例新闻摘要三</p>]]></description>
+      <pubDate>Sun, 26 Oct 2026 05:20:00 +0800</pubDate>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,30 @@
+{
+  "results": [
+    {
+      "id": 1,
+      "name": "示例小城",
+      "latitude": 22.1,
+      "longitude": 113.9,
+      "country": "示例国家",
+      "admin1": "示例省份",
+      "population": 1000
+    },
+    {
+      "id": 2,
+      "name": "示例大城",
+      "latitude": 22.54554,
+      "longitude": 114.0683,
+      "country": "示例国家",
+      "admin1": "示例省份",
+      "population": 17494398
+    },
+    {
+      "id": 3,
+      "name": "示例无人口地",
+      "latitude": 1.5,
+      "longitude": 2.5,
+      "country": "示例国家",
+      "admin1": "示例省份"
+    }
+  ]
+}

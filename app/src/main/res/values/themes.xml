@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!--
+    App 的窗口主题（round6）：
+    - 父主题用深色，避免冷启动时先闪一下白屏；
+    - windowBackground 用 聊天背景 chatBg1 #0E141A（Telegram Dark Blue，U0），和第一帧聊天页同色；
+    - Android 12+ 的启动页图标在 values-v31/themes.xml 里补。
+  -->
+  <style name="Theme.Rikkahub" parent="android:Theme.Material.NoActionBar">
+    <item name="android:windowBackground">#FF0E141A</item>
+  </style>
+</resources>

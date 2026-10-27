@@ -1,0 +1,22 @@
+{
+  "code": 0,
+  "message": "0",
+  "data": {
+    "trending": {
+      "list": [
+        {
+          "show_name": "示例热搜词一",
+          "keyword": "示例关键词一"
+        },
+        {
+          "show_name": null,
+          "keyword": "示例关键词二"
+        },
+        {
+          "show_name": "",
+          "keyword": "示例关键词三"
+        }
+      ]
+    }
+  }
+}

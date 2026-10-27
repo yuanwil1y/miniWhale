@@ -1,0 +1,24 @@
+diff --git a/app/src/main/java/me/rerere/rikkahub/data/datastore/DefaultProviders.kt b/app/src/main/java/me/rerere/rikkahub/data/datastore/DefaultProviders.kt
+--- a/app/src/main/java/me/rerere/rikkahub/data/datastore/DefaultProviders.kt
++++ b/app/src/main/java/me/rerere/rikkahub/data/datastore/DefaultProviders.kt
+@@ -18,6 +18,20 @@
+  * B5 去掉的 Google 类型「Gemini」（6ab18148-…）和 Claude 类型「MiniMax」（b4deabea-…）同理。
+  */
+ val DEFAULT_PROVIDERS = listOf(
++    // 仅用于生成 baseline profile，生成完必须撤掉（见 app/baselineprofile/mock-provider.patch）
++    ProviderSetting.OpenAI(
++        id = Uuid.parse("5c1f6a2e-8d3b-4f7a-9e2c-b4d1a6f0c3e8"),
++        name = "Baseline Profile Mock",
++        baseUrl = "http://127.0.0.1:18765/v1",
++        apiKey = "mock",
++        models = listOf(
++            me.rerere.ai.provider.Model(
++                modelId = "mock-model",
++                displayName = "Mock Model",
++                id = DEFAULT_AUTO_MODEL_ID,
++            )
++        ),
++    ),
+     ProviderSetting.OpenAI(
+         id = Uuid.parse("f099ad5b-ef03-446d-8e78-7e36787f780b"),
+         name = "DeepSeek",

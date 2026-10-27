@@ -1,0 +1,32 @@
+{
+  "data": {
+    "cards": [
+      {
+        "content": [
+          {
+            "content": [
+              {
+                "word": "置顶示例标题",
+                "isTop": true,
+                "hotScore": "9999999"
+              },
+              {
+                "word": "示例标题一",
+                "isTop": false,
+                "hotScore": "1234567"
+              },
+              {
+                "word": "示例标题二",
+                "hotScore": "987654"
+              },
+              {
+                "word": "示例标题三",
+                "hotScore": "123456"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

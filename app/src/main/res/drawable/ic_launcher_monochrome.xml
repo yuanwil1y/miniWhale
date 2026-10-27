@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 13+ 主题图标用的单色层（系统只取 alpha 再上色）：图标里的月牙 + 四角星剪影。
+  全部在 66dp 安全区（21..87）内：月牙约 30..70 × 34..74，星约 52..68 × 44..60。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 月牙：圆 (50,54) r20 减去圆 (57,49) r16 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M69.31,59.24 A20,20 0 1,1 51.31,34.04 A16,16 0 1,0 69.31,59.24 Z" />
+    <!-- 四角星 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M60,44 C61,50 62,51 68,52 C62,53 61,54 60,60 C59,54 58,53 52,52 C58,51 59,50 60,44 Z" />
+</vector>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  桌面长按的快捷方式（round6）：RikkaHub 原有的三个（拍照 / 翻译 / 媒体创作）都没接进小鲸鱼的界面，
+  全部去掉，只留一个「和小鲸鱼聊天」→ 打开聊天页。
+-->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="chat"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_chat_short"
+        android:shortcutLongLabel="@string/shortcut_chat_long">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="me.rerere.rikkahub.RouteActivity"
+            android:targetPackage="ltd.nightsky.whale" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

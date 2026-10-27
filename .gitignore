@@ -1,0 +1,28 @@
+*.iml
+.gradle/
+.kotlin/
+build/
+.local.properties
+local.properties
+/captures
+.externalNativeBuild
+.cxx
+.DS_Store
+.idea/
+*.hprof
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# 签名（密钥永远不进仓库）
+*.jks
+*.keystore
+*.p12
+keystore.properties
+/_signing/
+# 构建出的安装包
+app/github/
+app/play/
+app/release/
+*.idsig

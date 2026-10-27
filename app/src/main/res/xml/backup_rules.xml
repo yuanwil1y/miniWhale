@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Android 11 及以下的自动备份规则（API 30 以下读这个文件）。
+   android:allowBackup="false" 已经关掉自动备份，这里再显式排除一次（W-046，和 data_extraction_rules.xml 同一原则）：
+   本 App 的私有数据整域排除，一律不进备份——密钥与代理密码、人设、表情库、files/whale（照片 / 语音 / 文档 / 头像）、
+   数据库、DataStore / SharedPreferences，以及以后新加的目录。
+   注意：domain 只能是 file / database / sharedpref / external / root 等，
+   写 "database/" 这种带斜杠的会被 lint 判错。
+-->
+<full-backup-content>
+  <exclude
+    domain="root"
+    path="." />
+  <exclude
+    domain="file"
+    path="." />
+  <exclude
+    domain="database"
+    path="." />
+  <exclude
+    domain="sharedpref"
+    path="." />
+  <exclude
+    domain="external"
+    path="." />
+</full-backup-content>

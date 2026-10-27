@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!--
+    Android 12+ 的启动页（round6 第三节第 3 条）：
+    - 背景：聊天背景 chatBg1 #0E141A（Telegram Dark Blue，U0）；
+    - 图标：不设 windowSplashScreenAnimatedIcon，系统直接用启动图标（自适应图标，按圆形遮罩显示）。
+  -->
+  <style name="Theme.Rikkahub" parent="android:Theme.Material.NoActionBar">
+    <item name="android:windowBackground">#FF0E141A</item>
+    <item name="android:windowSplashScreenBackground">#FF0E141A</item>
+  </style>
+</resources>

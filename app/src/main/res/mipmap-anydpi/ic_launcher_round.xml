@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  启动图标（YuanWil1y 提供，源图 app/src/main/icon-src/miniwhale-icon.png）。
+  前景：各密度的全出血位图（108dp），由源图裁掉外圈后缩放；背景：同色纯色垫底；
+  monochrome：月牙 + 四角星剪影，给 Android 13+ 主题图标用。
+-->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@mipmap/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_monochrome" />
+</adaptive-icon>
