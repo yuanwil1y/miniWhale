@@ -92,6 +92,12 @@ class ChatViewModel(
     /** 本轮是否已经显示过第一条（第一条立即出现，之后的才按节奏等）。 */
     private var turnShownFirst = false
 
+    /**
+     * 她还在生成：新气泡只进队列、先不放。生成中的那条是没切片的整段，放出来会先闪一下整段、
+     * 再被切片替换掉、最后一条条重新出现。从发出到本轮生成结束（Typing(false) / 发送流程结束）为 true。
+     */
+    private var holdReveal = false
+
     /** 待显示气泡在库里的前一条可见消息（界面 id）：放出来时插在它后面，找不到就放到最后 */
     private val revealAnchors = mutableMapOf<Long, Long?>()
 
@@ -340,6 +346,7 @@ class ChatViewModel(
         val previous = currentTurn
         val submitted = CompletableDeferred<Unit>()
         val waitingSent = outgoing.mapTo(HashSet()) { it.id }
+        holdReveal = true
         val job = viewModelScope.launch {
             try {
                 previous?.submitted?.await()
@@ -355,7 +362,9 @@ class ChatViewModel(
             } finally {
                 submitted.complete(Unit)
                 if (currentConversationId == conversationId && currentTurn?.submitted === submitted) {
+                    holdReveal = false
                     _uiState.update { if (it.isHerTyping) it.copy(isHerTyping = false) else it }
+                    startRevealIfNeeded()
                 }
             }
         }
@@ -372,10 +381,12 @@ class ChatViewModel(
      * - 队列被清空（打断 / 切页 / 后台）时自然结束。
      */
     private fun startRevealIfNeeded() {
+        if (holdReveal) return
         if (revealQueue.isEmpty) return
         if (revealJob?.isActive == true) return
         revealJob = viewModelScope.launch {
             while (isActive) {
+                if (holdReveal) break
                 val next = revealQueue.peek() ?: break
                 val wait = MessagePacing.delayFor(next, isFirstInTurn = !turnShownFirst)
                 if (wait > 0L) {
@@ -408,6 +419,8 @@ class ChatViewModel(
      * 触发场景（任务书第三点五节）：用户发了新消息、离开聊天页、App 退到后台。
      */
     fun flushRevealNow() {
+        // 她还在生成时队列里只有没切片的整段，放出来就会闪一下；等本轮结束再放
+        if (holdReveal) return
         revealJob?.cancel()
         revealJob = null
         val rest = revealQueue.flush()
@@ -471,6 +484,7 @@ class ChatViewModel(
         revealQueue.clear()
         revealAnchors.clear()
         turnShownFirst = false
+        holdReveal = false
     }
     private fun apply(event: ChatEvent) {
         when (event) {
@@ -523,6 +537,7 @@ class ChatViewModel(
             is ChatEvent.Typing -> {
                 if (!event.typing) {
                     // 本轮生成结束：开始按节奏放气泡；队列没放完之前顶栏一直显示输入状态
+                    holdReveal = false
                     startRevealIfNeeded()
                     _uiState.update {
                         it.copy(isHerTyping = revealQueue.isNotEmpty(), typingLabel = null)

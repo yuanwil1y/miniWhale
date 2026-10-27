@@ -87,6 +87,47 @@ class ChatViewModelTest {
     }
 
     @Test
+    fun `the unsliced reply is never shown while she is still generating`() = runTest(dispatcher) {
+        val repo = ScriptedChatRepository()
+        val vm = chatViewModel(repo)
+        advanceUntilIdle()
+        val sliced = kotlinx.coroutines.CompletableDeferred<Unit>()
+        repo.onSend = { outgoing ->
+            flow {
+                repo.storeUser(outgoing.single())
+                emit(ChatEvent.StatusChanged(outgoing.single().id, MessageStatus.Sent))
+                emit(ChatEvent.Typing(true))
+                // 生成中：库里先是一整段没切片的回复
+                val whole = repo.storeHer("早上好\n你醒了吗")
+                emit(ChatEvent.Added(whole))
+                sliced.await()
+                emit(ChatEvent.Removed(listOf(whole.id)))
+                val s1 = repo.storeHer("早上好")
+                val s2 = repo.storeHer("你醒了吗")
+                emit(ChatEvent.Added(s1))
+                emit(ChatEvent.Added(s2, afterId = s1.id))
+                emit(ChatEvent.Typing(false))
+            }
+        }
+
+        vm.onDraftChange("在吗")
+        vm.send()
+        advanceTimeBy(5_000)
+        runCurrent()
+        // 整段不能先闪出来
+        assertEquals(listOf("在吗"), vm.uiState.value.messages.map { it.text })
+        assertEquals(true, vm.uiState.value.isHerTyping)
+        // 切到后台也不放
+        vm.onAppBackgrounded()
+        assertEquals(listOf("在吗"), vm.uiState.value.messages.map { it.text })
+
+        sliced.complete(Unit)
+        advanceUntilIdle()
+        assertEquals(listOf("在吗", "早上好", "你醒了吗"), vm.uiState.value.messages.map { it.text })
+        assertEquals(false, vm.uiState.value.isHerTyping)
+    }
+
+    @Test
     fun `optimistic message takes the stored id so later sync and delete find it`() = runTest(dispatcher) {
         val repo = ScriptedChatRepository()
         val vm = chatViewModel(repo)

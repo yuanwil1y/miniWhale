@@ -365,6 +365,15 @@ fun ChatScreen(
         }
     }
 
+    // 兜底：飞行无论卡在哪一步（没对上消息 id、切到后台时动画停住），2 秒后一定清掉，
+    // 否则输入框会一直透明、发送按钮不出来，只能杀后台恢复。
+    LaunchedEffect(sendFlight != null) {
+        if (sendFlight != null) {
+            delay(2_000)
+            sendFlight = null
+        }
+    }
+
     // 滚到底部按钮 / 浮动日期
     val dayRowIndexByLabel = remember(displayRows) {
         displayRows.mapIndexedNotNull { index, row ->
@@ -557,8 +566,9 @@ fun ChatScreen(
 
         ChatInputBar(
             draft = state.draft,
-            draftAlpha = if (sendFlight != null) 0f else 1f,
-            sendBlocked = sendFlight != null,
+            // 只藏「正在飞走的那句」；飞行期间新打的字照常显示、照常能发
+            draftAlpha = if (sendFlight?.text == state.draft) 0f else 1f,
+            sendBlocked = sendFlight?.text == state.draft,
             attachments = state.pendingAttachments,
             replyTo = state.replyTo,
             onDraftChange = onDraftChange,
